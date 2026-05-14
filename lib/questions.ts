@@ -622,6 +622,310 @@ export const QUESTIONS: Question[] = [
     q:"Bernoulli's principle states that as the velocity of a fluid increases, its pressure",
     choices:["increases","decreases","stays the same","becomes turbulent","doubles"], answer:1,
     why:"Bernoulli's principle: increased fluid velocity = decreased static pressure. This generates lift." },
+
+  // ─── READING COMPREHENSION ────────────────────────────────────────────────
+  // Passage A: Hypoxia
+  { id:"rc-01", section:"reading", topic:"main-idea", difficulty:1, tags:["comprehension"],
+    q:'Passage: "Hypoxia is a condition in which the body is deprived of adequate oxygen supply at the tissue level. In aviation, hypoxia is a serious concern at altitudes above 10,000 feet MSL, where oxygen partial pressure decreases significantly. Pilots who fly unpressurized aircraft above this altitude are required to use supplemental oxygen after 30 minutes of exposure. Symptoms include impaired judgment, euphoria, and loss of motor coordination — often so subtle that the pilot does not recognize impairment until incapacitation." — The PRIMARY danger of hypoxia described in the passage is that',
+    choices:[
+      "it causes immediate loss of consciousness",
+      "pilots may not recognize impairment before losing control",
+      "it only affects unpressurized aircraft",
+      "supplemental oxygen cannot prevent it",
+      "it occurs only above 15,000 feet"
+    ], answer:1,
+    why:"The passage explicitly states impairment can be subtle and unrecognized until incapacitation — making self-diagnosis the core danger." },
+  { id:"rc-02", section:"reading", topic:"detail-recall", difficulty:1, tags:["comprehension"],
+    q:'Based on the hypoxia passage: Supplemental oxygen is REQUIRED for unpressurized aircraft after how long above 10,000 feet MSL?',
+    choices:["10 minutes","20 minutes","30 minutes","45 minutes","60 minutes"], answer:2,
+    why:"The passage states: 'required to use supplemental oxygen after 30 minutes of exposure.'" },
+  { id:"rc-03", section:"reading", topic:"inference", difficulty:2, tags:["comprehension"],
+    q:'Based on the hypoxia passage: A pilot experiencing euphoria at altitude should MOST LIKELY assume',
+    choices:[
+      "the aircraft is performing well",
+      "supplemental oxygen has fully compensated",
+      "this is a symptom of hypoxia requiring immediate action",
+      "he is acclimated to the altitude",
+      "the condition will resolve in a few minutes"
+    ], answer:2,
+    why:"The passage lists euphoria as a hypoxia symptom. Recognizing symptoms as hypoxia is the correct response." },
+
+  // Passage B: Decision Making
+  { id:"rc-04", section:"reading", topic:"main-idea", difficulty:2, tags:["comprehension"],
+    q:'Passage: "Effective military leadership requires rapid, high-quality decisions under conditions of incomplete information and time pressure. Research on naturalistic decision making (NDM) shows that experienced military commanders rarely compare options exhaustively. Instead, they use pattern recognition to identify a workable course of action and mentally simulate its outcome. If the simulation reveals problems, they modify the action or select another. This recognition-primed decision (RPD) model predicts that expert decision makers do not optimize — they satisfice, choosing the first sufficiently good option." — According to the passage, experienced commanders primarily make decisions by',
+    choices:[
+      "generating and ranking all possible options",
+      "applying algorithmic checklists",
+      "recognizing patterns and simulating outcomes",
+      "delegating to subordinates with more time",
+      "requesting additional information before acting"
+    ], answer:2,
+    why:"The passage defines the RPD model as pattern recognition + mental simulation — the primary method described." },
+  { id:"rc-05", section:"reading", topic:"vocabulary-context", difficulty:2, tags:["comprehension"],
+    q:'In the decision-making passage, "satisfice" most nearly means',
+    choices:[
+      "optimize fully",
+      "delay action until conditions improve",
+      "choose the first sufficiently good option",
+      "satisfy all decision criteria",
+      "sacrifice one option for another"
+    ], answer:2,
+    why:"The passage defines satisfice directly: 'choosing the first sufficiently good option,' contrasted with optimization." },
+  { id:"rc-06", section:"reading", topic:"inference", difficulty:3, tags:["comprehension"],
+    q:'Which conclusion is best supported by the decision-making passage?',
+    choices:[
+      "Inexperienced commanders should also use the RPD model",
+      "Military training should focus on reducing information uncertainty",
+      "Expert decision-making skill is largely built through accumulated experience",
+      "Optimization produces better outcomes than satisficing under time pressure",
+      "NDM research applies only to senior commanders"
+    ], answer:2,
+    why:"Pattern recognition develops through experience. The passage implies expertise — and the RPD model itself — is experience-dependent." },
+
+  // Passage C: Jet engines
+  { id:"rc-07", section:"reading", topic:"detail-recall", difficulty:1, tags:["comprehension"],
+    q:'Passage: "A turbojet engine operates on the Brayton thermodynamic cycle: air is ingested and compressed by the compressor, mixed with fuel in the combustion chamber, ignited, and the hot expanding gases are expelled through the turbine and exhaust nozzle to produce thrust. The turbine extracts only enough energy from the exhaust to drive the compressor; the remaining energy exits as high-velocity thrust. A turbofan adds a large fan ahead of the compressor, bypassing some air around the core. This bypass air produces additional thrust at lower fuel consumption, making turbofans far more efficient for subsonic flight." — In a turbojet, the turbine is driven by',
+    choices:[
+      "the compressor fan",
+      "fuel combustion directly",
+      "hot exhaust gases from the combustion chamber",
+      "bypass air from the intake",
+      "electrical power from the engine"
+    ], answer:2,
+    why:"The passage states hot expanding gases are expelled through the turbine — the turbine is driven by those gases." },
+  { id:"rc-08", section:"reading", topic:"comparison", difficulty:2, tags:["comprehension"],
+    q:'According to the jet engine passage, turbofans are preferred for subsonic flight primarily because they',
+    choices:[
+      "produce more total thrust than turbojets at all speeds",
+      "are simpler and cheaper to maintain",
+      "bypass air around the core for greater efficiency at lower speeds",
+      "operate at higher altitudes than turbojets",
+      "use a different thermodynamic cycle"
+    ], answer:2,
+    why:"The passage: 'bypass air produces additional thrust at lower fuel consumption, making turbofans far more efficient for subsonic flight.'" },
+  { id:"rc-09", section:"reading", topic:"inference", difficulty:3, tags:["comprehension"],
+    q:'Based on the jet engine passage, why does the turbine extract only enough energy to drive the compressor?',
+    choices:[
+      "To prevent the turbine from overheating",
+      "Because compressors require more energy than turbines produce",
+      "So maximum exhaust energy exits as thrust rather than being consumed internally",
+      "Because regulations limit turbine energy extraction",
+      "To maintain fuel efficiency in the combustion chamber"
+    ], answer:2,
+    why:"The passage implies the goal is maximizing thrust from exhaust energy — extracting only what's needed for the compressor preserves the rest as thrust." },
+
+  // Passage D: Crew Resource Management
+  { id:"rc-10", section:"reading", topic:"main-idea", difficulty:2, tags:["comprehension"],
+    q:'Passage: "Crew Resource Management (CRM) training was developed following analysis of accident data showing that the majority of aviation accidents were caused not by mechanical failure or lack of technical skill, but by failures of communication, leadership, and decision-making within the cockpit crew. CRM training teaches situational awareness, assertiveness, and structured communication. Studies show CRM reduces accident rates, but critics note that simulation-based CRM training does not always transfer to high-stress real-world conditions." — The primary cause of aviation accidents that led to CRM development was',
+    choices:[
+      "mechanical failures in aging aircraft",
+      "inadequate pilot technical training",
+      "breakdowns in crew communication and decision-making",
+      "poor weather judgment by pilots",
+      "air traffic control errors"
+    ], answer:2,
+    why:"The passage directly states: 'failures of communication, leadership, and decision-making within the cockpit crew' drove CRM development." },
+
+  // ─── SITUATIONAL JUDGMENT ─────────────────────────────────────────────────
+  { id:"sj-01", section:"judgment", topic:"interpersonal-conflict", difficulty:2, tags:["judgment"],
+    q:"You are a junior officer and notice your supervisor is consistently assigning the most desirable shifts to one airman who is known to be his friend. Other airmen have privately complained to you. What is the MOST effective action?",
+    choices:[
+      "Tell the complaining airmen to resolve the issue themselves",
+      "Confront the supervisor publicly in front of the team",
+      "Document the pattern and address it privately with the supervisor, citing fairness standards",
+      "Report the supervisor to his superior immediately without speaking to him first",
+      "Do nothing and wait for the situation to resolve itself"
+    ], answer:2,
+    why:"Addressing concerns directly, privately, and with documented evidence is the professional standard before escalating. Public confrontation undermines authority; doing nothing enables unfairness." },
+  { id:"sj-02", section:"judgment", topic:"mission-prioritization", difficulty:2, tags:["judgment"],
+    q:"During a pre-mission briefing you realize the flight plan contains a significant navigation error that would route the flight through restricted airspace. The mission commander seems unaware. You have 10 minutes before departure. What is the BEST action?",
+    choices:[
+      "File the error in a post-mission report so the commander is not embarrassed",
+      "Quietly correct the error in your own records but say nothing",
+      "Immediately and clearly inform the mission commander of the specific error",
+      "Inform your peer and let them decide whether to raise it",
+      "Proceed with the flight and avoid the restricted airspace through improvisation"
+    ], answer:2,
+    why:"Mission safety is non-negotiable. Immediately and clearly informing the responsible authority of a safety-critical error is always the correct action, regardless of perceived awkwardness." },
+  { id:"sj-03", section:"judgment", topic:"ethics-integrity", difficulty:2, tags:["judgment"],
+    q:"After returning from a training exercise, you realize you failed to properly document a minor aircraft discrepancy in the maintenance log. The aircraft is now back in service. What should you do?",
+    choices:[
+      "Say nothing since the aircraft appears to be flying normally",
+      "Mention it informally to a colleague but make no official record",
+      "Immediately report the undocumented discrepancy to the appropriate maintenance authority",
+      "Wait to see if anyone notices before deciding whether to report",
+      "Add the discrepancy to the next scheduled maintenance report to avoid attention"
+    ], answer:2,
+    why:"Maintenance documentation integrity is a safety and legal obligation. Reporting immediately — even when it involves a personal error — is the correct and ethical action." },
+  { id:"sj-04", section:"judgment", topic:"leadership-initiative", difficulty:2, tags:["judgment"],
+    q:"You are the senior airman on duty when a junior subordinate makes a significant procedural error that goes unnoticed by others. The error could affect mission readiness but has not caused harm yet. What is the MOST appropriate response?",
+    choices:[
+      "Ignore it since no harm was done",
+      "Correct the error yourself without telling the subordinate",
+      "Correct the error and use it as a private coaching opportunity with the subordinate",
+      "Report the subordinate to the commanding officer immediately",
+      "Announce the error in the next team brief as a learning example without naming the person"
+    ], answer:2,
+    why:"Correcting the error protects mission readiness. Private coaching preserves the subordinate's dignity, builds competence, and maintains team cohesion — a leadership best practice." },
+  { id:"sj-05", section:"judgment", topic:"resource-management", difficulty:2, tags:["judgment"],
+    q:"Your team is tasked with completing a high-priority project by end of day. Two hours in, a critical team member reports a personal emergency and must leave. With reduced capacity, the deadline cannot be met at current quality standards. What is the BEST course of action?",
+    choices:[
+      "Continue without adjusting scope or timeline and accept degraded quality",
+      "Immediately notify your supervisor of the situation and the impact on deliverables",
+      "Ask remaining team members to work through breaks without flagging the supervisor",
+      "Postpone the entire project without authorization",
+      "Delegate all remaining work to the most junior team member"
+    ], answer:1,
+    why:"Proactively informing leadership of changed conditions is essential. Leaders need accurate information to make decisions about resources, scope, or deadlines. Concealing problems leads to worse outcomes." },
+  { id:"sj-06", section:"judgment", topic:"interpersonal-conflict", difficulty:3, tags:["judgment"],
+    q:"A peer approaches you and says a mutual colleague made a racially insensitive remark in the break room. The peer wants you to confront the colleague on their behalf. What is the MOST appropriate response?",
+    choices:[
+      "Confront the colleague on behalf of your peer as requested",
+      "Tell your peer you cannot get involved in interpersonal disputes",
+      "Encourage your peer to report the incident through proper channels and offer your support",
+      "Report the incident yourself without consulting your peer further",
+      "Advise your peer to ignore it to avoid escalation"
+    ], answer:2,
+    why:"Encouraging proper reporting respects your peer's agency and ensures the incident is addressed through legitimate accountability channels. Proxy confrontation may escalate; ignoring it is ethically wrong." },
+  { id:"sj-07", section:"judgment", topic:"mission-prioritization", difficulty:2, tags:["judgment"],
+    q:"During a flight, you experience an unexpected equipment malfunction that is not covered in the checklist. The aircraft is currently safe but the malfunction's progression is uncertain. What is the MOST appropriate action?",
+    choices:[
+      "Continue the mission and address the malfunction after landing",
+      "Immediately return to base and notify maintenance",
+      "Attempt to improvise a repair at altitude",
+      "Ignore the malfunction if the aircraft feels stable",
+      "Contact ATC and your chain of command, then follow emergency procedures for closest divert"
+    ], answer:4,
+    why:"Unknown malfunctions require immediate communication with ATC and chain of command, followed by conservative divert planning. Continuing with an uncharacterized malfunction is unacceptable risk." },
+  { id:"sj-08", section:"judgment", topic:"ethics-integrity", difficulty:3, tags:["judgment"],
+    q:"A senior officer asks you to sign off on a training completion record for a junior airman who you know did not complete the required training. The senior officer says the deadline pressure justifies the exception. What is the BEST action?",
+    choices:[
+      "Sign the record since a senior officer authorized it",
+      "Sign the record but note your concern in a private journal",
+      "Decline to sign and explain that you cannot certify training that did not occur",
+      "Ask a peer to sign it instead to avoid confrontation with the senior officer",
+      "Sign it this time but request the training be completed within a week"
+    ], answer:2,
+    why:"Falsifying official records is a serious integrity violation regardless of rank or pressure. Declining is the only correct action. Passing it to a peer makes you complicit. A senior officer cannot authorize fraud." },
+
+  // ─── INSTRUMENT COMPREHENSION ─────────────────────────────────────────────
+  // Note: Official test uses visual AI + compass images. These use text descriptions.
+  { id:"ic-01", section:"instrument", topic:"attitude-level", difficulty:1, tags:["instruments"],
+    q:"The attitude indicator shows the miniature aircraft symbol LEVEL with the horizon bar and the bank indicator at 0°. The heading indicator shows 090°. What is the aircraft's attitude?",
+    choices:[
+      "Climbing, wings level, heading East",
+      "Level flight, wings level, heading East",
+      "Descending, wings level, heading East",
+      "Level flight, 30° left bank, heading East",
+      "Climbing, 30° right bank, heading East"
+    ], answer:1,
+    why:"Level miniature aircraft + horizon bar alignment = level flight. 0° bank = wings level. 090° on heading indicator = East." },
+  { id:"ic-02", section:"instrument", topic:"attitude-climb", difficulty:1, tags:["instruments"],
+    q:"The attitude indicator shows the miniature aircraft symbol 10° ABOVE the horizon bar. The bank indicator reads 0°. The heading indicator shows 270°. The aircraft is",
+    choices:[
+      "Descending, wings level, heading West",
+      "Level, wings level, heading West",
+      "Climbing, wings level, heading West",
+      "Climbing, 10° right bank, heading West",
+      "Climbing, wings level, heading East"
+    ], answer:2,
+    why:"Miniature aircraft above horizon = nose up = climbing. 0° bank = wings level. 270° = West heading." },
+  { id:"ic-03", section:"instrument", topic:"attitude-bank", difficulty:2, tags:["instruments"],
+    q:"The attitude indicator shows the miniature aircraft level with the horizon bar. The bank indicator shows a 30° RIGHT bank. The heading indicator reads 180°. The aircraft is",
+    choices:[
+      "Climbing, 30° right bank, heading South",
+      "Level, 30° right bank, heading South",
+      "Descending, 30° right bank, heading South",
+      "Level, 30° left bank, heading South",
+      "Level, wings level, heading South"
+    ], answer:1,
+    why:"Miniature aircraft level with horizon = not climbing/descending. 30° right bank shown on indicator. 180° heading = South." },
+  { id:"ic-04", section:"instrument", topic:"attitude-descent", difficulty:2, tags:["instruments"],
+    q:"The attitude indicator shows the miniature aircraft 15° BELOW the horizon bar. The bank indicator shows 0°. The heading indicator reads 360°/000°. The aircraft is",
+    choices:[
+      "Climbing, wings level, heading North",
+      "Level, wings level, heading North",
+      "Descending, wings level, heading North",
+      "Descending, 15° left bank, heading North",
+      "Level, 15° right bank, heading North"
+    ], answer:2,
+    why:"Miniature aircraft below horizon = nose down = descending. 0° bank = wings level. 360°/000° = North." },
+  { id:"ic-05", section:"instrument", topic:"attitude-combined", difficulty:2, tags:["instruments"],
+    q:"The attitude indicator shows the miniature aircraft 10° above the horizon bar with a 45° LEFT bank shown on the bank indicator. The heading indicator reads 045°. The aircraft is",
+    choices:[
+      "Climbing, 45° right bank, heading Northeast",
+      "Level, 45° left bank, heading Northeast",
+      "Climbing, 45° left bank, heading Northeast",
+      "Descending, 45° left bank, heading Northeast",
+      "Climbing, wings level, heading Northeast"
+    ], answer:2,
+    why:"Above horizon = climbing. Left bank indicator = 45° left bank. 045° = Northeast heading." },
+  { id:"ic-06", section:"instrument", topic:"attitude-bank", difficulty:2, tags:["instruments"],
+    q:"The attitude indicator horizon bar is tilted so that the LEFT wing of the horizon bar is HIGHER than the right. The bank pointer reads 20°. The miniature aircraft is level with the tilted horizon bar. The aircraft is",
+    choices:[
+      "In a 20° right bank, level flight",
+      "In a 20° left bank, climbing",
+      "In a 20° left bank, level flight",
+      "Wings level, descending",
+      "In a 20° right bank, climbing"
+    ], answer:0,
+    why:"When the left side of the horizon bar rises, the aircraft has banked RIGHT. The miniature aircraft level with it means no pitch change — level flight in a right bank." },
+  { id:"ic-07", section:"instrument", topic:"attitude-combined", difficulty:3, tags:["instruments"],
+    q:"Attitude indicator: miniature aircraft 5° below horizon bar, bank indicator 30° RIGHT bank. Heading indicator: 135°. The aircraft is",
+    choices:[
+      "Climbing, 30° right bank, heading Southeast",
+      "Level, 30° right bank, heading Southeast",
+      "Descending, 30° left bank, heading Southeast",
+      "Descending, 30° right bank, heading Southeast",
+      "Descending, wings level, heading Southeast"
+    ], answer:3,
+    why:"Below horizon = descending. 30° right bank on indicator. 135° = Southeast. All three combine: descending right bank heading Southeast." },
+  { id:"ic-08", section:"instrument", topic:"attitude-level", difficulty:1, tags:["instruments"],
+    q:"The attitude indicator shows: miniature aircraft level, bank 0°. Heading indicator: 225°. Compass reads SW. The aircraft is",
+    choices:[
+      "Climbing, wings level, heading Southwest",
+      "Level, wings level, heading Northwest",
+      "Descending, wings level, heading Southwest",
+      "Level, wings level, heading Southwest",
+      "Level, 10° right bank, heading Southwest"
+    ], answer:3,
+    why:"Level miniature aircraft, 0° bank = straight and level flight. 225° = Southwest. All consistent." },
+
+  // ─── BLOCK COUNTING ───────────────────────────────────────────────────────
+  // Each question describes a 3D stack and asks how many blocks touch a labeled block.
+  // "Touch" = full face contact (not edge or corner only).
+  { id:"bc-01", section:"block", topic:"block-counting", difficulty:1, tags:["spatial"],
+    q:"A 3×1×1 row of three blocks sits on a flat surface. Block 2 is in the MIDDLE. How many other blocks does Block 2 touch?",
+    choices:["1","2","3","4","5"], answer:1,
+    why:"Block 2 (middle) touches Block 1 on the left, Block 3 on the right, and the surface beneath. The question asks how many OTHER blocks it touches = 2 (not counting the surface)." },
+  { id:"bc-02", section:"block", topic:"block-counting", difficulty:2, tags:["spatial"],
+    q:"A 2×2 base layer of 4 blocks has a single block centered on top. The top block is Block 5. How many blocks does Block 5 touch?",
+    choices:["1","2","3","4","5"], answer:3,
+    why:"Block 5 rests on all 4 base blocks — touching each of the 4 below through shared faces." },
+  { id:"bc-03", section:"block", topic:"block-counting", difficulty:2, tags:["spatial"],
+    q:"Three blocks form an L-shape on a flat surface: Block 1 is in the corner, Block 2 is to its right, Block 3 is above Block 1. How many blocks does Block 1 touch?",
+    choices:["1","2","3","4","5"], answer:1,
+    why:"Block 1 (the corner piece) touches Block 2 (to the right) and Block 3 (above) = 2 other blocks." },
+  { id:"bc-04", section:"block", topic:"block-counting", difficulty:2, tags:["spatial"],
+    q:"A staircase arrangement: 3 blocks on the bottom row, 2 on the second, 1 on top. Block 4 is the LEFT block on the second row. How many other blocks does Block 4 touch?",
+    choices:["2","3","4","5","6"], answer:1,
+    why:"Block 4 (left of row 2) touches: Block 1 below-left, Block 2 below-right (it straddles both), Block 5 (right block on same row), and Block 6 above. That's 4... actually in a pure staircase where each block aligns with one below: Block 4 touches Block 1 below, Block 5 to the right, and Block 6 above = 3." },
+  { id:"bc-05", section:"block", topic:"block-counting", difficulty:2, tags:["spatial"],
+    q:"A 2×2×2 cube of 8 blocks. Block 1 is a CORNER block at the top layer. How many other blocks does Block 1 touch?",
+    choices:["1","2","3","4","5"], answer:2,
+    why:"In a 2×2×2 cube, each corner block shares faces with exactly 3 other blocks (one in each direction: front-back, left-right, up-down)." },
+  { id:"bc-06", section:"block", topic:"block-counting", difficulty:3, tags:["spatial"],
+    q:"A T-shaped arrangement: 4 blocks in a horizontal row (Blocks 1-4), 1 block below the center of the row (Block 5, touching Blocks 2 and 3 equally). Block 2 is second from the left. How many blocks does Block 2 touch?",
+    choices:["2","3","4","5","6"], answer:1,
+    why:"Block 2 touches: Block 1 (left), Block 3 (right), and Block 5 (below) = 3 other blocks." },
+  { id:"bc-07", section:"block", topic:"block-counting", difficulty:3, tags:["spatial"],
+    q:"A pyramid: 4 blocks on the base (2×2 grid), 1 block on top (Block 5). All 5 blocks are in contact where faces meet. How many blocks does one of the BASE CORNER blocks (Block 1) touch?",
+    choices:["1","2","3","4","5"], answer:1,
+    why:"A base corner block (in a 2×2 base) touches 2 other base blocks (the two adjacent to it) and Block 5 above = 3 total." },
+  { id:"bc-08", section:"block", topic:"block-counting", difficulty:1, tags:["spatial"],
+    q:"Two blocks sit side by side on a surface. Block 1 is on the LEFT, Block 2 is on the RIGHT. A third block (Block 3) is placed directly on top of Block 1 only. How many blocks does Block 1 touch?",
+    choices:["1","2","3","4","5"], answer:1,
+    why:"Block 1 touches Block 2 (to its right) and Block 3 (above it) = 2 other blocks." },
 ];
 
 export const TABLE_GRID: Record<string, Record<string, number>> = {
@@ -637,14 +941,103 @@ export const TABLE_GRID: Record<string, Record<string, number>> = {
 export const X_VALS = ["-3", "-2", "-1", "0", "+1", "+2", "+3"];
 export const Y_VALS = ["+3", "+2", "+1", "0", "-1", "-2", "-3"];
 
+/**
+ * Current AFOQT structure (Pearson/AF, ~2020–present):
+ * 12 timed subtests | ~5 hours | ~516 items | No guessing penalty
+ * SDI (subtest 7) is 220 personality items — not drillable, excluded from exam sim.
+ * Sections where most candidates do NOT finish: Table Reading, Block Counting, Instrument Comprehension.
+ */
 export const SECTION_META = [
-  { id: "verbal",     title: "Verbal Analogies",     icon: "Brain",      timeSeconds: 8*60,  description: "Identify relationships between word pairs.", tips: "Trust your first instinct. Over-analysis wastes time.", officialCount: 25 },
-  { id: "arithmetic", title: "Arithmetic Reasoning",  icon: "Calculator", timeSeconds: 29*60, description: "Real-world math word problems.", tips: "Rate×Time, Percent, Ratio, Volume. Skip ugly setup problems, return if time allows.", officialCount: 25 },
-  { id: "word",       title: "Word Knowledge",        icon: "BookOpen",   timeSeconds: 5*60,  description: "Select the closest synonym.", tips: "Eliminate obvious trash first. Look for closest meaning, not perfect synonym.", officialCount: 25 },
-  { id: "math",       title: "Math Knowledge",        icon: "Target",     timeSeconds: 22*60, description: "Algebra, geometry, and number theory.", tips: "Know the formula, execute fast. Skip ugly problems first pass.", officialCount: 25 },
-  { id: "science",    title: "Physical Science",      icon: "Zap",        timeSeconds: 10*60, description: "Physics, chemistry, and earth science.", tips: "Memorization heavy. Free points if you drill these.", officialCount: 20 },
-  { id: "table",      title: "Table Reading",         icon: "Table2",     timeSeconds: 7*60,  description: "Read values from a coordinate table at speed.", tips: "Row then column. Never calculate. Train your eyes to find intersections fast.", officialCount: 40 },
-  { id: "aviation",   title: "Aviation Information",  icon: "Plane",      timeSeconds: 8*60,  description: "Aircraft, aerodynamics, navigation, weather.", tips: "Study the four forces, controls, and instruments. High ROI memorization.", officialCount: 20 },
+  {
+    id: "verbal", title: "Verbal Analogies", icon: "Brain",
+    timeSeconds: 8*60, officialCount: 25, secPerQ: (8*60/25).toFixed(1),
+    description: "25 items, 8 min. Word relationship pairs — the classic A:B::C:? format.",
+    tips: "Trust first instinct. Over-analysis wastes time. ~19 sec/question.",
+    hardToFinish: false,
+    composites: ["pilot","cso","abm","verbal","academic"],
+  },
+  {
+    id: "arithmetic", title: "Arithmetic Reasoning", icon: "Calculator",
+    timeSeconds: 29*60, officialCount: 25, secPerQ: (29*60/25).toFixed(1),
+    description: "25 items, 29 min. Word problems: rate, percent, ratio, volume, work.",
+    tips: "~70 sec/question. Skip ugly multi-step setups first pass. Guess and mark — no penalty.",
+    hardToFinish: false,
+    composites: ["pilot","cso","abm","quant","academic"],
+  },
+  {
+    id: "word", title: "Word Knowledge", icon: "BookOpen",
+    timeSeconds: 5*60, officialCount: 25, secPerQ: (5*60/25).toFixed(1),
+    description: "25 items, 5 min. Select the closest synonym. Pure vocab speed.",
+    tips: "12 sec/question. Eliminate trash first. No second-guessing. Move.",
+    hardToFinish: false,
+    composites: ["verbal","academic"],
+  },
+  {
+    id: "math", title: "Math Knowledge", icon: "Target",
+    timeSeconds: 22*60, officialCount: 25, secPerQ: (22*60/25).toFixed(1),
+    description: "25 items, 22 min. Algebra, geometry, exponents, probability.",
+    tips: "~53 sec/question. Know formulas cold. Skip anything requiring >3 steps on first pass.",
+    hardToFinish: false,
+    composites: ["pilot","cso","abm","quant","academic"],
+  },
+  {
+    id: "reading", title: "Reading Comprehension", icon: "BookOpen",
+    timeSeconds: 38*60, officialCount: 25, secPerQ: (38*60/25).toFixed(1),
+    description: "25 items, 38 min. Passage-based questions. ~5 passages, ~5 questions each.",
+    tips: "~91 sec/question — most generous timing. Read questions FIRST, then skim passage. Never re-read entire passage.",
+    hardToFinish: false,
+    composites: ["verbal","academic"],
+  },
+  {
+    id: "judgment", title: "Situational Judgment", icon: "Users",
+    timeSeconds: 35*60, officialCount: 25, secPerQ: (35*60/25).toFixed(1),
+    description: "25 items, 35 min. Best-action scenarios for military interpersonal situations.",
+    tips: "84 sec/question. Always pick: safety first, integrity second, communication third. Avoid extremes.",
+    hardToFinish: false,
+    composites: ["verbal"],
+  },
+  // SDI (Self-Description Inventory, 220 personality items, 40 min) is omitted —
+  // it cannot be drilled and has no correct answers. Be consistent & honest on exam day.
+  {
+    id: "science", title: "Physical Science", icon: "Zap",
+    timeSeconds: 10*60, officialCount: 20, secPerQ: (10*60/20).toFixed(1),
+    description: "20 items, 10 min. Physics, chemistry, thermodynamics.",
+    tips: "30 sec/question. Pure memorization. These are free points — drill them until automatic.",
+    hardToFinish: false,
+    composites: ["abm"],
+  },
+  {
+    id: "table", title: "Table Reading", icon: "Table2",
+    timeSeconds: 7*60, officialCount: 40, secPerQ: (7*60/40).toFixed(1),
+    description: "40 items, 7 min. Look up coordinates in a value table at maximum speed.",
+    tips: "⚠ ~10.5 sec/question. Most candidates do NOT finish. Row then column — zero thinking. Eyes only.",
+    hardToFinish: true,
+    composites: ["pilot","cso","abm"],
+  },
+  {
+    id: "instrument", title: "Instrument Comprehension", icon: "Gauge",
+    timeSeconds: 6*60, officialCount: 20, secPerQ: (6*60/20).toFixed(1),
+    description: "20 items, 6 min. Determine aircraft attitude from attitude indicator + compass heading.",
+    tips: "⚠ 18 sec/question. Read AI first (pitch then bank), then heading. Practice until it's automatic.",
+    hardToFinish: true,
+    composites: ["pilot"],
+  },
+  {
+    id: "block", title: "Block Counting", icon: "Boxes",
+    timeSeconds: 3*60, officialCount: 20, secPerQ: (3*60/20).toFixed(1),
+    description: "20 items, 3 min. Count how many blocks a specified block touches in a 3D stack.",
+    tips: "⚠ 9 sec/question. Hardest to finish. Visualize 6 faces. Count only full-face contact, not corners.",
+    hardToFinish: true,
+    composites: ["cso"],
+  },
+  {
+    id: "aviation", title: "Aviation Information", icon: "Plane",
+    timeSeconds: 8*60, officialCount: 20, secPerQ: (8*60/20).toFixed(1),
+    description: "20 items, 8 min. Aircraft systems, aerodynamics, navigation, weather.",
+    tips: "24 sec/question. Memorize four forces, control surfaces, instrument functions, and basic met. High ROI.",
+    hardToFinish: false,
+    composites: ["pilot"],
+  },
 ] as const;
 
 export function getSectionQuestions(sectionId: string) {

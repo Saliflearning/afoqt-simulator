@@ -112,29 +112,57 @@ export default function ExamPage() {
             <div className="p-4 rounded-2xl bg-red-900/30"><GraduationCap className="w-8 h-8 text-red-400" /></div>
             <div>
               <h1 className="text-3xl font-bold">Full Exam Simulation</h1>
-              <p className="text-slate-400">All 7 sections in sequence. Official-style timing. Zero feedback during exam.</p>
+              <p className="text-slate-400">11 drillable subtests in sequence — official timing, zero feedback. Mirrors the real ~5-hour, 12-subtest AFOQT.</p>
             </div>
           </div>
+
+          {/* SDI Notice */}
+          <div className="p-4 rounded-xl border border-blue-800/40 bg-blue-950/20">
+            <p className="text-blue-300 text-sm font-semibold">About the Self-Description Inventory (SDI)</p>
+            <p className="text-slate-400 text-sm mt-1">The official AFOQT includes Subtest 7: the SDI — 220 personality/temperament items, 40 minutes. It has no correct answers and cannot be drilled. On exam day: answer honestly and consistently. This sim skips it; the real exam does not.</p>
+          </div>
+
           <div className="p-4 rounded-xl border border-red-800/50 bg-red-950/20">
-            <div className="flex items-center gap-2 mb-2"><AlertTriangle className="w-4 h-4 text-red-400" /><span className="font-semibold text-red-300">Exam Rules</span></div>
+            <div className="flex items-center gap-2 mb-2"><AlertTriangle className="w-4 h-4 text-red-400" /><span className="font-semibold text-red-300">Exam Rules — No Guessing Penalty</span></div>
             <ul className="text-sm text-slate-300 space-y-1 list-disc list-inside">
-              <li>No answer explanations during exam — only after full review</li>
+              <li>No feedback during exam — explanations only in post-exam review</li>
               <li>Each section auto-advances when time expires</li>
-              <li>Unanswered questions count as incorrect</li>
-              <li>Guessing is always better than leaving blank</li>
-              <li>Results update your SM-2 adaptive engine</li>
+              <li>Blanks count as wrong — always guess before time runs out</li>
+              <li>Table Reading, Block Counting, Instrument Comprehension: most candidates do not finish — pace aggressively</li>
+              <li>All attempts update your SM-2 adaptive engine</li>
             </ul>
           </div>
+
           <div className="space-y-2">
-            {SECTION_META.map(s => (
-              <div key={s.id} className="flex items-center justify-between p-3 rounded-xl bg-slate-800 text-sm">
-                <span className="text-slate-200">{s.title}</span>
-                <div className="flex items-center gap-3">
-                  <span className="text-slate-400">{getSectionQuestions(s.id).length} questions</span>
-                  <Badge variant="secondary">{formatTime(s.timeSeconds)}</Badge>
+            {SECTION_META.map((s, i) => {
+              const isHard = (s as any).hardToFinish;
+              return (
+                <div key={s.id} className={`flex items-center justify-between p-3 rounded-xl text-sm ${isHard ? "bg-red-950/30 border border-red-900/40" : "bg-slate-800"}`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-500 text-xs w-4">{i + 1}</span>
+                    <span className={isHard ? "text-red-200" : "text-slate-200"}>{s.title}</span>
+                    {isHard && <Badge variant="destructive" className="text-[10px] px-1.5">Hard to finish</Badge>}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-slate-400">{s.officialCount} official</span>
+                    <span className="text-slate-500 text-xs">{(s as any).secPerQ}s/q</span>
+                    <Badge variant="secondary">{formatTime(s.timeSeconds)}</Badge>
+                  </div>
                 </div>
+              );
+            })}
+            {/* SDI placeholder */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-800/50 border border-slate-700/50 text-sm opacity-60">
+              <div className="flex items-center gap-2">
+                <span className="text-slate-500 text-xs w-4">7</span>
+                <span className="text-slate-400">Self-Description Inventory</span>
+                <Badge variant="secondary" className="text-[10px]">Skipped</Badge>
               </div>
-            ))}
+              <div className="flex items-center gap-3">
+                <span className="text-slate-500">220 personality items</span>
+                <Badge variant="secondary">40 min</Badge>
+              </div>
+            </div>
           </div>
           <div className="p-3 rounded-xl bg-slate-800 text-sm text-slate-300">
             <span className="text-slate-400">Total time: </span>

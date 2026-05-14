@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Brain, Calculator, BookOpen, Target, Zap, Table2, Plane, RotateCcw, ChevronLeft, ChevronRight, CheckCircle2, XCircle, BarChart3 } from "lucide-react";
+import { Brain, Calculator, BookOpen, Target, Zap, Table2, Plane, RotateCcw, ChevronLeft, ChevronRight, CheckCircle2, XCircle, BarChart3, Gauge, Boxes, Users, AlertTriangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,11 @@ import { getSectionQuestions, SECTION_META } from "@/lib/questions";
 import { uid, pct, gradeLabel, formatTime } from "@/lib/utils";
 import type { QuestionAttempt, Session, SectionId } from "@/lib/types";
 
-const ICONS: Record<string, React.ElementType> = { verbal: Brain, arithmetic: Calculator, word: BookOpen, math: Target, science: Zap, table: Table2, aviation: Plane };
+const ICONS: Record<string, React.ElementType> = {
+  verbal: Brain, arithmetic: Calculator, word: BookOpen, math: Target,
+  reading: BookOpen, judgment: Users, science: Zap, table: Table2,
+  instrument: Gauge, block: Boxes, aviation: Plane,
+};
 
 type Mode = "practice" | "test";
 
@@ -122,6 +126,15 @@ function DrillContent() {
               <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Sec/Question</div><div className="font-bold text-lg">{(section.timeSeconds / questions.length).toFixed(0)}s</div></div>
               <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Official Count</div><div className="font-bold text-lg">{section.officialCount}</div></div>
             </div>
+            {(section as any).hardToFinish && (
+              <div className="p-4 rounded-xl border border-red-800/50 bg-red-950/20 flex items-start gap-3">
+                <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-red-300 text-sm font-semibold">Most candidates do NOT finish this section</p>
+                  <p className="text-slate-300 text-sm mt-1">At {(section as any).secPerQ}s per question, speed is the primary skill. Guess and move — never leave blanks. There is no guessing penalty on the official AFOQT.</p>
+                </div>
+              </div>
+            )}
             <div className="p-4 rounded-xl border border-amber-800/50 bg-amber-950/20">
               <p className="text-amber-200 text-sm font-medium">⚡ Tactical Tip</p>
               <p className="text-slate-300 text-sm mt-1">{section.tips}</p>

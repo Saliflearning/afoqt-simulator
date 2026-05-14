@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Brain, Calculator, BookOpen, Target, Zap, Table2, Plane, BarChart3, Flame, Clock, TrendingUp, ChevronRight, Dumbbell, GraduationCap } from "lucide-react";
+import { Brain, Calculator, BookOpen, Target, Zap, Table2, Plane, Gauge, Boxes, Users, BarChart3, Flame, Clock, TrendingUp, ChevronRight, Dumbbell, GraduationCap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +13,9 @@ import { SECTION_META, QUESTIONS } from "@/lib/questions";
 import type { AppState, SectionPerf } from "@/lib/types";
 
 const SECTION_ICONS: Record<string, React.ElementType> = {
-  verbal: Brain, arithmetic: Calculator, word: BookOpen,
-  math: Target, science: Zap, table: Table2, aviation: Plane,
+  verbal: Brain, arithmetic: Calculator, word: BookOpen, math: Target,
+  reading: BookOpen, judgment: Users, science: Zap, table: Table2,
+  instrument: Gauge, block: Boxes, aviation: Plane,
 };
 
 const cardVariants = {

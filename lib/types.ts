@@ -3,8 +3,12 @@ export type SectionId =
   | "arithmetic"
   | "word"
   | "math"
+  | "reading"
+  | "judgment"
   | "science"
   | "table"
+  | "instrument"
+  | "block"
   | "aviation";
 
 export interface Question {
@@ -60,6 +64,51 @@ export interface Session {
   timeUsedSeconds: number;
   attempts: QuestionAttempt[];
 }
+
+export interface CompositeScore {
+  name: string;
+  score: number;
+  min: number; // typical minimum for qualification
+  description: string;
+}
+
+export const COMPOSITE_DEFS = [
+  {
+    key: "pilot",
+    name: "Pilot",
+    sections: ["verbal","arithmetic","table","instrument","math","aviation"] as SectionId[],
+    minScore: 25,
+    description: "Required for rated pilot training. Combines verbal, math, table reading, instrument comprehension, and aviation subtests.",
+  },
+  {
+    key: "cso",
+    name: "Combat Systems Officer",
+    sections: ["verbal","arithmetic","math","table","block"] as SectionId[],
+    minScore: 25,
+    description: "Navigator/CSO track. Heavy on math, spatial reasoning (block counting), and table reading speed.",
+  },
+  {
+    key: "abm",
+    name: "Air Battle Manager",
+    sections: ["verbal","arithmetic","math","table","science"] as SectionId[],
+    minScore: 25,
+    description: "ABM composite draws on verbal, quantitative, science, and table reading.",
+  },
+  {
+    key: "verbal",
+    name: "Verbal",
+    sections: ["verbal","reading","word","judgment"] as SectionId[],
+    minScore: null,
+    description: "Subcomposite: Verbal Analogies + Reading Comprehension + Word Knowledge + Situational Judgment.",
+  },
+  {
+    key: "quant",
+    name: "Quantitative",
+    sections: ["arithmetic","math"] as SectionId[],
+    minScore: null,
+    description: "Subcomposite: Arithmetic Reasoning + Math Knowledge.",
+  },
+] as const;
 
 export interface AppState {
   sessions: Session[];
