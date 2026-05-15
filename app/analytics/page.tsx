@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, BarChart, Bar, Cell, Legend } from "recharts";
-import { BarChart3, TrendingUp, Brain, Clock, Target, Flame } from "lucide-react";
+import { BarChart3, TrendingUp, Brain, Clock, Target, Flame, ShieldCheck, AlertTriangle, Minus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { loadState } from "@/lib/storage";
 import { computeSectionPerf, computeWeakTopics, rollingScores, pct, gradeLabel } from "@/lib/utils";
 import { SECTION_META } from "@/lib/questions";
 import type { AppState } from "@/lib/types";
+import { COMPOSITE_DEFS } from "@/lib/types";
 
 const SECTION_COLORS: Record<string, string> = {
   verbal: "#60a5fa", arithmetic: "#34d399", word: "#a78bfa",
@@ -33,6 +35,15 @@ export default function AnalyticsPage() {
   });
 
   const barData = perf.map(p => ({ section: SECTION_META.find(s => s.id === p.section)?.title.split(" ")[0] ?? p.section, score: p.pct, color: SECTION_COLORS[p.section] ?? "#60a5fa" }));
+
+  // Composite scores — weighted average of contributing section scores
+  const compositeScores = COMPOSITE_DEFS.map(def => {
+    const sectionScores = def.sections.map(sid => perf.find(p => p.section === sid)?.pct ?? null);
+    const valid = sectionScores.filter((s): s is number => s !== null);
+    const score = valid.length > 0 ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : null;
+    const coverage = valid.length; // how many contributing sections have data
+    return { ...def, score, coverage, total: def.sections.length };
+  });
 
   const sessionHistory = state.sessions.slice(-20).map((s, i) => ({
     session: i + 1,
@@ -86,6 +97,62 @@ export default function AnalyticsPage() {
           </CardContent></Card>
         ))}
       </div>
+
+      {/* AFOQT Composite Scores */}
+      <Card>
+        <CardContent className="p-5 space-y-4">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-blue-400" />
+            <h3 className="font-semibold">AFOQT Composite Scores</h3>
+            <span className="text-xs text-slate-500 ml-auto">Based on your drill & exam history</span>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {compositeScores.map(def => {
+              const hasData = def.score !== null;
+              const score = def.score ?? 0;
+              const { label: gl, color: gc } = gradeLabel(score);
+              const minScore = (def as any).minScore;
+              const qualified = minScore ? score >= minScore : null;
+              return (
+                <div key={def.key} className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/50 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-sm">{def.name}</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5 leading-snug max-w-[220px]">{def.description}</p>
+                    </div>
+                    <div className="text-right shrink-0 ml-3">
+                      {hasData ? (
+                        <>
+                          <div className={`text-2xl font-bold tabular-nums ${gc}`}>{score}%</div>
+                          <div className="text-[10px] text-slate-400">{gl}</div>
+                        </>
+                      ) : (
+                        <div className="text-slate-600 text-sm">No data</div>
+                      )}
+                    </div>
+                  </div>
+                  {hasData && <Progress value={score} indicatorClassName={score >= 75 ? "bg-green-500" : score >= 60 ? "bg-amber-500" : "bg-red-500"} className="h-1.5" />}
+                  <div className="flex items-center justify-between text-[10px] text-slate-500">
+                    <span>{def.coverage}/{def.total} sections tracked</span>
+                    {minScore && hasData && (
+                      <span className={`flex items-center gap-1 font-medium ${qualified ? "text-green-400" : "text-red-400"}`}>
+                        {qualified
+                          ? <><ShieldCheck className="w-3 h-3" /> Meets min ({minScore}%)</>
+                          : <><AlertTriangle className="w-3 h-3" /> Below min ({minScore}%)</>
+                        }
+                      </span>
+                    )}
+                    {!minScore && <span className="flex items-center gap-0.5"><Minus className="w-3 h-3" /> No min score</span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-[11px] text-slate-500 leading-relaxed">
+            Composites are approximations derived from your practice data. Official AFOQT composites use scaled scores from a standardized norming population — these percentages show your relative standing across the sections that feed each composite.
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Growth line chart */}
       {growth.length > 1 && (

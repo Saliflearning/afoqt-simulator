@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="96" fill="#020617"/>
+  <!-- Shield body -->
+  <path d="M256 80 L380 130 L380 270 Q380 360 256 430 Q132 360 132 270 L132 130 Z" fill="#1e3a8a" stroke="#3b82f6" stroke-width="6"/>
+  <!-- Graduation cap -->
+  <rect x="196" y="200" width="120" height="12" rx="6" fill="#60a5fa"/>
+  <polygon points="256,168 196,200 316,200" fill="#93c5fd"/>
+  <!-- Tassel line -->
+  <line x1="316" y1="200" x2="316" y2="230" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="316" cy="236" r="6" fill="#60a5fa"/>
+  <!-- Stars representing rank -->
+  <circle cx="220" cy="300" r="8" fill="#fbbf24"/>
+  <circle cx="256" cy="290" r="8" fill="#fbbf24"/>
+  <circle cx="292" cy="300" r="8" fill="#fbbf24"/>
+  <!-- Pro text -->
+  <text x="256" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="48" fill="#60a5fa" letter-spacing="2">PRO</text>
+</svg>
