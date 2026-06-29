@@ -45,11 +45,15 @@ export default function Dashboard() {
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-3">
               <Badge variant="destructive">AFOQT Stress Mode</Badge>
+              <Badge variant="warning">Unofficial practice tool</Badge>
               <Badge variant="secondary">SM-2 Adaptive Engine</Badge>
               {state.streak > 0 && <Badge variant="warning" className="flex items-center gap-1"><Flame className="w-3 h-3" /> {state.streak} day streak</Badge>}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">AFOQT<span className="text-blue-400">Pro</span></h1>
             <p className="text-slate-400 mt-2 max-w-2xl text-sm md:text-base">Adaptive drilling powered by spaced repetition. The system learns what you struggle with and forces you to face it. No comfort. Just performance.</p>
+            <p className="text-xs md:text-sm text-amber-200/90 mt-3 max-w-3xl">
+              This app is an unofficial AFOQT-style study tool. It is not affiliated with the U.S. Air Force, does not use official exam content, and should be treated as supplemental practice rather than authoritative preparation material.
+            </p>
           </div>
           <div className="flex gap-3 shrink-0">
             <Button asChild size="lg"><Link href="/drill"><Dumbbell className="w-4 h-4" /> Start Drill</Link></Button>
@@ -60,7 +64,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Overall Score", value: totalQuestioned ? `${overallPct}%` : "—", sub: gradeStr, subColor: gradeColor, icon: TrendingUp },
+          { label: "Overall Score", value: totalQuestioned ? `${overallPct}%` : "â€”", sub: gradeStr, subColor: gradeColor, icon: TrendingUp },
           { label: "Sessions", value: state.sessions.length.toString(), sub: "total practice sessions", subColor: "text-slate-400", icon: BarChart3 },
           { label: "Questions Done", value: totalQuestioned.toLocaleString(), sub: `${totalCorrect} correct`, subColor: "text-green-400", icon: Target },
           { label: "Minutes Practiced", value: state.totalMinutesPracticed.toString(), sub: "total time invested", subColor: "text-slate-400", icon: Clock },
@@ -100,7 +104,7 @@ export default function Dashboard() {
                       </div>
                       <div>
                         <div className="font-semibold text-sm">{s.title}</div>
-                        <div className="text-xs text-slate-500 mt-0.5">{Math.round(s.timeSeconds / 60)} min • {qCount} questions</div>
+                        <div className="text-xs text-slate-500 mt-0.5">{Math.round(s.timeSeconds / 60)} min â€¢ {qCount} questions</div>
                       </div>
                       {score !== null && <Progress value={score} indicatorClassName={score >= 75 ? "bg-green-500" : score >= 60 ? "bg-amber-500" : "bg-red-500"} />}
                       <div className={`text-xs font-medium ${color}`}>{label}</div>
@@ -128,7 +132,7 @@ export default function Dashboard() {
                       <span className="text-red-400 font-semibold tabular-nums">{t.pct}%</span>
                     </div>
                     <Progress value={t.pct} indicatorClassName="bg-red-500" />
-                    <div className="text-xs text-slate-500">{t.correct}/{t.total} correct — {t.section}</div>
+                    <div className="text-xs text-slate-500">{t.correct}/{t.total} correct â€” {t.section}</div>
                   </div>
                 ))}
                 <Button asChild variant="outline" size="sm" className="w-full"><Link href="/adaptive"><Brain className="w-4 h-4" /> Drill Weak Areas<ChevronRight className="w-4 h-4 ml-auto" /></Link></Button>
@@ -162,13 +166,22 @@ export default function Dashboard() {
         <CardContent className="p-5">
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             {[
-              { title: "SM-2 Spaced Repetition", color: "text-blue-300", body: "Based on Ebbinghaus forgetting curve research. Wrong answers resurface at optimally timed intervals — just before you would forget them." },
+              { title: "SM-2 Spaced Repetition", color: "text-blue-300", body: "Based on Ebbinghaus forgetting curve research. Wrong answers resurface at optimally timed intervals â€” just before you would forget them." },
               { title: "Stress Inoculation Training", color: "text-amber-300", body: "Drills under time pressure build the calm-under-pressure performance that exam day demands. Train stressed. Perform relaxed." },
               { title: "Deliberate Practice Metrics", color: "text-green-300", body: "Every session tracked. Improvement curves, section radar, and topic-level weakness data give you actionable insight, not just a score." },
             ].map(({ title, color, body }) => (
               <div key={title}><div className={`font-semibold mb-2 ${color}`}>{title}</div><p className="text-slate-400">{body}</p></div>
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-amber-900/40 bg-amber-950/20">
+        <CardContent className="p-5 space-y-2 text-sm">
+          <h3 className="font-semibold text-amber-200">Study-tool limitations</h3>
+          <p className="text-slate-300">
+            Question content is independently authored, stored locally in the client, and not a substitute for official study guidance. Use this simulator to practice pacing, repetition, and self-review habits rather than as proof of official scoring accuracy.
+          </p>
         </CardContent>
       </Card>
     </div>
