@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
-import ts from "typescript";
+import * as ts from "typescript";
 
 const projectRoot = process.cwd();
 
@@ -18,12 +18,13 @@ function loadTsModule(relativePath) {
     },
   }).outputText;
 
-  const module = { exports: {} };
+  const compiledModule = { exports: {} };
   const sandbox = {
-    module,
-    exports: module.exports,
+    module: compiledModule,
+    exports: compiledModule.exports,
     require: (specifier) => {
       if (specifier === "./types") return {};
+      if (specifier === "./sm2") return loadTsModule("lib/sm2.ts");
       throw new Error(`Unsupported import in test harness: ${specifier}`);
     },
     console,
@@ -35,11 +36,12 @@ function loadTsModule(relativePath) {
   };
 
   vm.runInNewContext(transpiled, sandbox, { filename: absolutePath });
-  return module.exports;
+  return compiledModule.exports;
 }
 
-const { QUESTIONS } = loadTsModule("lib/questions.ts");
+const { QUESTIONS, SECTION_META } = loadTsModule("lib/questions.ts");
 const { sm2Update, defaultCardState, qualityFromResult } = loadTsModule("lib/sm2.ts");
+const { emptyState, normalizeState } = loadTsModule("lib/storage.ts");
 
 test("question IDs are unique and answers stay within choice bounds", () => {
   const ids = new Set();
@@ -53,6 +55,28 @@ test("question IDs are unique and answers stay within choice bounds", () => {
       Number.isInteger(question.answer) && question.answer >= 0 && question.answer < question.choices.length,
       `${question.id} has an out-of-range answer index`,
     );
+  }
+});
+
+test("question bank is substantial and every configured section has authored content", () => {
+  assert.ok(QUESTIONS.length >= 180, "expected a substantial authored question bank");
+  assert.equal(SECTION_META.length, 11);
+
+  for (const section of SECTION_META) {
+    assert.ok(QUESTIONS.some((question) => question.section === section.id), `${section.id} has no questions`);
+    assert.ok(section.referenceCount > 0, `${section.id} needs a positive pacing reference`);
+    assert.equal("officialCount" in section, false, `${section.id} must not label a practice count as official`);
+  }
+});
+
+test("question content has complete fields, distinct choices, and clean encoding", () => {
+  const brokenEncoding = /Ã|â|Â|ðŸ|ï¸|�/;
+
+  for (const question of QUESTIONS) {
+    assert.ok(question.q.trim(), `${question.id} needs prompt text`);
+    assert.ok(question.why.trim(), `${question.id} needs an explanation`);
+    assert.equal(new Set(question.choices).size, question.choices.length, `${question.id} has duplicate choices`);
+    assert.equal(brokenEncoding.test(JSON.stringify(question)), false, `${question.id} contains broken text encoding`);
   }
 });
 
@@ -101,4 +125,33 @@ test("qualityFromResult maps correctness and speed into stable review bands", ()
   assert.equal(qualityFromResult(true, 1000, 10000), 5);
   assert.equal(qualityFromResult(true, 4000, 10000), 4);
   assert.equal(qualityFromResult(true, 9000, 10000), 3);
+});
+
+test("local state normalization recovers safely from missing or malformed data", () => {
+  assert.deepEqual(normalizeState(null), emptyState());
+  assert.deepEqual(normalizeState({ sessions: "bad", streak: -4 }), emptyState());
+
+  const normalized = normalizeState({
+    sessions: [],
+    cardStates: {},
+    streak: 3,
+    lastPracticeDate: "2026-08-30",
+    totalMinutesPracticed: 42,
+  });
+  assert.equal(normalized.streak, 3);
+  assert.equal(normalized.totalMinutesPracticed, 42);
+});
+
+test("public product language avoids official score and timing equivalence", () => {
+  const files = [
+    "app/page.tsx",
+    "app/exam/page.tsx",
+    "app/analytics/page.tsx",
+    "lib/questions.ts",
+    "lib/types.ts",
+    "public/manifest.json",
+  ];
+  const content = files.map((file) => fs.readFileSync(path.join(projectRoot, file), "utf8")).join("\n");
+  const bannedClaims = [/officialCount/, /official timing/i, /science-backed/i, /meets min/i, /below min/i];
+  for (const pattern of bannedClaims) assert.equal(pattern.test(content), false, `found unsafe claim: ${pattern}`);
 });

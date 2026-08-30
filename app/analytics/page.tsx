@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, BarChart, Bar, Cell, Legend } from "recharts";
-import { BarChart3, TrendingUp, Brain, Clock, Target, Flame, ShieldCheck, AlertTriangle, Minus } from "lucide-react";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, BarChart, Bar, Cell } from "recharts";
+import { BarChart3, TrendingUp, Brain, Clock, Target, Flame, ShieldCheck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -65,7 +65,7 @@ export default function AnalyticsPage() {
         <p className="text-slate-400">Complete at least one drill or exam session to see your analytics.</p>
         <div className="flex gap-3 justify-center">
           <a href="/drill" className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">Start Drill</a>
-          <a href="/exam" className="px-4 py-2 bg-slate-700 text-slate-200 rounded-xl text-sm font-medium hover:bg-slate-600 transition-colors">Full Exam</a>
+          <a href="/exam" className="px-4 py-2 bg-slate-700 text-slate-200 rounded-xl text-sm font-medium hover:bg-slate-600 transition-colors">Timed Practice</a>
         </div>
       </CardContent></Card>
     </div>
@@ -98,21 +98,19 @@ export default function AnalyticsPage() {
         ))}
       </div>
 
-      {/* AFOQT Composite Scores */}
+      {/* Practice group summaries */}
       <Card>
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-blue-400" />
-            <h3 className="font-semibold">AFOQT Composite Scores</h3>
-            <span className="text-xs text-slate-500 ml-auto">Based on your drill & exam history</span>
+            <h3 className="font-semibold">Practice Group Summaries</h3>
+            <span className="text-xs text-slate-500 ml-auto">Local progress only</span>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             {compositeScores.map(def => {
               const hasData = def.score !== null;
               const score = def.score ?? 0;
               const { label: gl, color: gc } = gradeLabel(score);
-              const minScore = (def as any).minScore;
-              const qualified = minScore ? score >= minScore : null;
               return (
                 <div key={def.key} className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/50 space-y-2">
                   <div className="flex items-center justify-between">
@@ -134,22 +132,17 @@ export default function AnalyticsPage() {
                   {hasData && <Progress value={score} indicatorClassName={score >= 75 ? "bg-green-500" : score >= 60 ? "bg-amber-500" : "bg-red-500"} className="h-1.5" />}
                   <div className="flex items-center justify-between text-[10px] text-slate-500">
                     <span>{def.coverage}/{def.total} sections tracked</span>
-                    {minScore && hasData && (
-                      <span className={`flex items-center gap-1 font-medium ${qualified ? "text-green-400" : "text-red-400"}`}>
-                        {qualified
-                          ? <><ShieldCheck className="w-3 h-3" /> Meets min ({minScore}%)</>
-                          : <><AlertTriangle className="w-3 h-3" /> Below min ({minScore}%)</>
-                        }
-                      </span>
-                    )}
-                    {!minScore && <span className="flex items-center gap-0.5"><Minus className="w-3 h-3" /> No min score</span>}
+                    <span>No qualification prediction</span>
                   </div>
                 </div>
               );
             })}
           </div>
           <p className="text-[11px] text-slate-500 leading-relaxed">
-            Composites are approximations derived from your practice data. Official AFOQT composites use scaled scores from a standardized norming population — these percentages show your relative standing across the sections that feed each composite.
+            These are transparent averages of selected practice sections, not
+            official AFOQT composites, percentile scores, eligibility results,
+            or predictions. Official composites use controlled scoring and a
+            validation reference group.
           </p>
         </CardContent>
       </Card>
@@ -241,7 +234,7 @@ export default function AnalyticsPage() {
           <h3 className="font-semibold">Recent Sessions</h3>
           <div className="space-y-2 max-h-80 overflow-y-auto">
             {sessionHistory.slice().reverse().map((s, i) => {
-              const { label, color } = gradeLabel(s.score);
+              const { color } = gradeLabel(s.score);
               return (
                 <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-slate-800 text-sm">
                   <div className="flex items-center gap-3">

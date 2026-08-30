@@ -23,6 +23,15 @@
 # misc
 .DS_Store
 *.pem
+.claude/
+.agents/
+.specify/
+specs/
+graphify-out/
+AGENTS.md
+CLAUDE.md
+**/AGENTS.md
+**/CLAUDE.md
 
 # debug
 npm-debug.log*
@@ -34,7 +43,7 @@ yarn-error.log*
 .env*
 
 # vercel
-.vercel
+.vercel/
 
 # typescript
 *.tsbuildinfo

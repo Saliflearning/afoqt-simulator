@@ -1,5 +1,5 @@
 "use client";
-import type { AppState, Session, CardState, QuestionAttempt } from "./types";
+import type { AppState, Session, CardState } from "./types";
 import { defaultCardState } from "./sm2";
 
 const KEY = "afoqt_state_v2";
@@ -9,7 +9,7 @@ export function loadState(): AppState {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return emptyState();
-    return JSON.parse(raw) as AppState;
+    return normalizeState(JSON.parse(raw));
   } catch {
     return emptyState();
   }
@@ -20,13 +20,39 @@ export function saveState(state: AppState): void {
   localStorage.setItem(KEY, JSON.stringify(state));
 }
 
-function emptyState(): AppState {
+export function emptyState(): AppState {
   return {
     sessions: [],
     cardStates: {},
     streak: 0,
     lastPracticeDate: "",
     totalMinutesPracticed: 0,
+  };
+}
+
+export function normalizeState(value: unknown): AppState {
+  if (!value || typeof value !== "object") return emptyState();
+
+  const candidate = value as Partial<AppState>;
+  return {
+    sessions: Array.isArray(candidate.sessions) ? candidate.sessions : [],
+    cardStates:
+      candidate.cardStates && typeof candidate.cardStates === "object"
+        ? candidate.cardStates
+        : {},
+    streak:
+      typeof candidate.streak === "number" && Number.isFinite(candidate.streak)
+        ? Math.max(0, candidate.streak)
+        : 0,
+    lastPracticeDate:
+      typeof candidate.lastPracticeDate === "string"
+        ? candidate.lastPracticeDate
+        : "",
+    totalMinutesPracticed:
+      typeof candidate.totalMinutesPracticed === "number" &&
+      Number.isFinite(candidate.totalMinutesPracticed)
+        ? Math.max(0, candidate.totalMinutesPracticed)
+        : 0,
   };
 }
 

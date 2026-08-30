@@ -44,13 +44,13 @@ export default function Dashboard() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <Badge variant="destructive">AFOQT Stress Mode</Badge>
+              <Badge variant="destructive">Timed Practice</Badge>
               <Badge variant="warning">Unofficial practice tool</Badge>
               <Badge variant="secondary">SM-2 Adaptive Engine</Badge>
               {state.streak > 0 && <Badge variant="warning" className="flex items-center gap-1"><Flame className="w-3 h-3" /> {state.streak} day streak</Badge>}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">AFOQT<span className="text-blue-400">Pro</span></h1>
-            <p className="text-slate-400 mt-2 max-w-2xl text-sm md:text-base">Adaptive drilling powered by spaced repetition. The system learns what you struggle with and forces you to face it. No comfort. Just performance.</p>
+            <p className="text-slate-400 mt-2 max-w-2xl text-sm md:text-base">Adaptive drilling powered by spaced repetition. The system identifies weaker questions and brings them back for focused review.</p>
             <p className="text-xs md:text-sm text-amber-200/90 mt-3 max-w-3xl">
               This app is an unofficial AFOQT-style study tool. It is not affiliated with the U.S. Air Force, does not use official exam content, and should be treated as supplemental practice rather than authoritative preparation material.
             </p>
@@ -64,7 +64,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Overall Score", value: totalQuestioned ? `${overallPct}%` : "â€”", sub: gradeStr, subColor: gradeColor, icon: TrendingUp },
+          { label: "Overall Score", value: totalQuestioned ? `${overallPct}%` : "—", sub: gradeStr, subColor: gradeColor, icon: TrendingUp },
           { label: "Sessions", value: state.sessions.length.toString(), sub: "total practice sessions", subColor: "text-slate-400", icon: BarChart3 },
           { label: "Questions Done", value: totalQuestioned.toLocaleString(), sub: `${totalCorrect} correct`, subColor: "text-green-400", icon: Target },
           { label: "Minutes Practiced", value: state.totalMinutesPracticed.toString(), sub: "total time invested", subColor: "text-slate-400", icon: Clock },
@@ -104,7 +104,7 @@ export default function Dashboard() {
                       </div>
                       <div>
                         <div className="font-semibold text-sm">{s.title}</div>
-                        <div className="text-xs text-slate-500 mt-0.5">{Math.round(s.timeSeconds / 60)} min â€¢ {qCount} questions</div>
+                        <div className="text-xs text-slate-500 mt-0.5">{Math.round(s.timeSeconds / 60)} min • {qCount} questions</div>
                       </div>
                       {score !== null && <Progress value={score} indicatorClassName={score >= 75 ? "bg-green-500" : score >= 60 ? "bg-amber-500" : "bg-red-500"} />}
                       <div className={`text-xs font-medium ${color}`}>{label}</div>
@@ -132,7 +132,7 @@ export default function Dashboard() {
                       <span className="text-red-400 font-semibold tabular-nums">{t.pct}%</span>
                     </div>
                     <Progress value={t.pct} indicatorClassName="bg-red-500" />
-                    <div className="text-xs text-slate-500">{t.correct}/{t.total} correct â€” {t.section}</div>
+                    <div className="text-xs text-slate-500">{t.correct}/{t.total} correct — {t.section}</div>
                   </div>
                 ))}
                 <Button asChild variant="outline" size="sm" className="w-full"><Link href="/adaptive"><Brain className="w-4 h-4" /> Drill Weak Areas<ChevronRight className="w-4 h-4 ml-auto" /></Link></Button>
@@ -147,7 +147,7 @@ export default function Dashboard() {
             {[
               { href: "/drill", label: "Section Drill", desc: "One section, full timer, practice or test mode", Icon: Dumbbell, cls: "bg-blue-600 hover:bg-blue-700" },
               { href: "/adaptive", label: "Adaptive Mode", desc: "SM-2 targets your weakest questions across sections", Icon: Brain, cls: "bg-purple-600 hover:bg-purple-700" },
-              { href: "/exam", label: "Full Exam Simulation", desc: "All 7 sections, official timing, zero feedback", Icon: GraduationCap, cls: "bg-red-700 hover:bg-red-800" },
+              { href: "/exam", label: "Timed Practice Sequence", desc: "All 11 configured sections, preset pacing, zero feedback", Icon: GraduationCap, cls: "bg-red-700 hover:bg-red-800" },
               { href: "/analytics", label: "Growth Analytics", desc: "Charts, radar, session history, improvement trends", Icon: BarChart3, cls: "bg-slate-700 hover:bg-slate-600" },
             ].map(({ href, label, desc, Icon, cls }) => (
               <Link key={href} href={href}>
@@ -166,8 +166,8 @@ export default function Dashboard() {
         <CardContent className="p-5">
           <div className="grid md:grid-cols-3 gap-4 text-sm">
             {[
-              { title: "SM-2 Spaced Repetition", color: "text-blue-300", body: "Based on Ebbinghaus forgetting curve research. Wrong answers resurface at optimally timed intervals â€” just before you would forget them." },
-              { title: "Stress Inoculation Training", color: "text-amber-300", body: "Drills under time pressure build the calm-under-pressure performance that exam day demands. Train stressed. Perform relaxed." },
+              { title: "SM-2-Style Review", color: "text-blue-300", body: "Correct and incorrect responses adjust a local review schedule so weaker questions return sooner." },
+              { title: "Timed Pacing Practice", color: "text-amber-300", body: "Configurable countdowns help learners rehearse decision-making under time pressure without claiming official test equivalence." },
               { title: "Deliberate Practice Metrics", color: "text-green-300", body: "Every session tracked. Improvement curves, section radar, and topic-level weakness data give you actionable insight, not just a score." },
             ].map(({ title, color, body }) => (
               <div key={title}><div className={`font-semibold mb-2 ${color}`}>{title}</div><p className="text-slate-400">{body}</p></div>

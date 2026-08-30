@@ -6,28 +6,42 @@ on:
   pull_request:
     branches: [master]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  validate:
+  safety:
+    name: Repository Safety
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
         with:
-          node-version: 20
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
           cache: npm
+      - run: npm ci
+      - run: npm run safety:self-test
+      - run: npm run safety:current
+      - run: npm run safety:history
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run content and logic validation
-        run: npm test
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run production build
-        run: npm run build
+  quality:
+    name: Tests, Lint, Types, Build, Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm audit --audit-level=high

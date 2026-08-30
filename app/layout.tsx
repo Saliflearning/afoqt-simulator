@@ -8,7 +8,7 @@ import { BottomNav } from "@/components/BottomNav";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "AFOQTPro - Unofficial Adaptive Exam Simulator",
+  title: "AFOQTPro - Unofficial Local-First Learning Simulator",
   description: "Unofficial AFOQT-style practice app with adaptive drilling, spaced repetition, and local-first analytics.",
   keywords: ["AFOQT", "Air Force", "exam prep", "pilot", "adaptive learning", "spaced repetition"],
   manifest: "/manifest.json",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: "AFOQTPro",
   },
   openGraph: {
-    title: "AFOQTPro - Unofficial Adaptive Exam Simulator",
+    title: "AFOQTPro - Unofficial Local-First Learning Simulator",
     description: "Unofficial AFOQT-style practice with adaptive drilling, spaced repetition, and progress analytics.",
     type: "website",
   },

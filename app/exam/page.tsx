@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion } from "framer-motion";
 import { GraduationCap, ChevronRight, ChevronLeft, RotateCcw, CheckCircle2, XCircle, AlertTriangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -36,35 +35,7 @@ export default function ExamPage() {
   const currentSection = SECTION_META[sectionIdx];
   const questions = getSectionQuestions(currentSection.id);
 
-  useEffect(() => {
-    if (phase === "active") {
-      setTimeLeft(currentSection.timeSeconds);
-      setAnswers({});
-      setQuestionIdx(0);
-      attemptTimesRef.current = [];
-      questionStartRef.current = Date.now();
-    }
-  }, [sectionIdx, phase, currentSection.timeSeconds]);
-
-  useEffect(() => {
-    if (phase !== "active" || timeLeft <= 0) return;
-    const t = setInterval(() => setTimeLeft(v => { if (v <= 1) { advanceSection(); return 0; } return v - 1; }), 1000);
-    return () => clearInterval(t);
-  }, [phase, timeLeft]);
-
-  const startExam = () => { sessionStartRef.current = Date.now(); setSectionIdx(0); setPhase("active"); };
-
-  const advanceSection = useCallback(() => {
-    const result: SectionResult = { sectionId: currentSection.id as SectionId, answers, timeUsed: currentSection.timeSeconds - timeLeft };
-    setSectionResults(prev => [...prev, result]);
-    if (sectionIdx < SECTION_META.length - 1) {
-      setSectionIdx(i => i + 1);
-    } else {
-      finishExam([...sectionResults, result]);
-    }
-  }, [currentSection, answers, timeLeft, sectionIdx, sectionResults]);
-
-  const finishExam = (allResults: SectionResult[]) => {
+  const finishExam = useCallback((allResults: SectionResult[]) => {
     setPhase("review");
     const appState = loadState();
     let newState = { ...appState };
@@ -89,7 +60,35 @@ export default function ExamPage() {
     newState = saveSession(newState, session);
     saveState(newState);
     setSectionResults(allResults);
-  };
+  }, []);
+
+  const advanceSection = useCallback(() => {
+    const result: SectionResult = { sectionId: currentSection.id as SectionId, answers, timeUsed: currentSection.timeSeconds - timeLeft };
+    setSectionResults(prev => [...prev, result]);
+    if (sectionIdx < SECTION_META.length - 1) {
+      setSectionIdx(i => i + 1);
+    } else {
+      finishExam([...sectionResults, result]);
+    }
+  }, [currentSection, answers, timeLeft, sectionIdx, sectionResults, finishExam]);
+
+  useEffect(() => {
+    if (phase === "active") {
+      setTimeLeft(currentSection.timeSeconds);
+      setAnswers({});
+      setQuestionIdx(0);
+      attemptTimesRef.current = [];
+      questionStartRef.current = Date.now();
+    }
+  }, [sectionIdx, phase, currentSection.timeSeconds]);
+
+  useEffect(() => {
+    if (phase !== "active" || timeLeft <= 0) return;
+    const t = setInterval(() => setTimeLeft(v => { if (v <= 1) { advanceSection(); return 0; } return v - 1; }), 1000);
+    return () => clearInterval(t);
+  }, [phase, timeLeft, advanceSection]);
+
+  const startExam = () => { sessionStartRef.current = Date.now(); setSectionIdx(0); setPhase("active"); };
 
   const handleChoose = (choiceIdx: number) => {
     const elapsed = Date.now() - questionStartRef.current;
@@ -111,15 +110,15 @@ export default function ExamPage() {
           <div className="flex items-center gap-4">
             <div className="p-4 rounded-2xl bg-red-900/30"><GraduationCap className="w-8 h-8 text-red-400" /></div>
             <div>
-              <h1 className="text-3xl font-bold">Full Exam Simulation</h1>
-              <p className="text-slate-400">11 drillable subtests in sequence — official timing, zero feedback. Mirrors the real ~5-hour, 12-subtest AFOQT.</p>
+              <h1 className="text-3xl font-bold">Timed Practice Sequence</h1>
+              <p className="text-slate-400">11 authored practice sections in sequence with configured pacing and zero feedback. This is not a replica of the controlled AFOQT.</p>
             </div>
           </div>
 
           {/* SDI Notice */}
           <div className="p-4 rounded-xl border border-blue-800/40 bg-blue-950/20">
             <p className="text-blue-300 text-sm font-semibold">About the Self-Description Inventory (SDI)</p>
-            <p className="text-slate-400 text-sm mt-1">The official AFOQT includes Subtest 7: the SDI — 220 personality/temperament items, 40 minutes. It has no correct answers and cannot be drilled. On exam day: answer honestly and consistently. This sim skips it; the real exam does not.</p>
+            <p className="text-slate-400 text-sm mt-1">The real AFOQT contains controlled content and scoring that this independent practice app does not reproduce. Confirm current structure and test-day instructions with an authorized test administrator.</p>
           </div>
 
           <div className="p-4 rounded-xl border border-red-800/50 bg-red-950/20">
@@ -144,7 +143,7 @@ export default function ExamPage() {
                     {isHard && <Badge variant="destructive" className="text-[10px] px-1.5">Hard to finish</Badge>}
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-slate-400">{s.officialCount} official</span>
+                    <span className="text-slate-400">{s.referenceCount} pacing reference</span>
                     <span className="text-slate-500 text-xs">{(s as any).secPerQ}s/q</span>
                     <Badge variant="secondary">{formatTime(s.timeSeconds)}</Badge>
                   </div>
@@ -170,7 +169,7 @@ export default function ExamPage() {
             <span className="text-slate-400 ml-4">Total questions: </span>
             <span className="font-bold">{SECTION_META.reduce((s, x) => s + getSectionQuestions(x.id).length, 0)}</span>
           </div>
-          <Button onClick={startExam} size="lg" className="w-full bg-red-600 hover:bg-red-700">Begin Full Exam</Button>
+          <Button onClick={startExam} size="lg" className="w-full bg-red-600 hover:bg-red-700">Begin Timed Practice</Button>
         </CardContent>
       </Card>
     </div>

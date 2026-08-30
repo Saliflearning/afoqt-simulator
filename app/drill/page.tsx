@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { Brain, Calculator, BookOpen, Target, Zap, Table2, Plane, RotateCcw, ChevronLeft, ChevronRight, CheckCircle2, XCircle, BarChart3, Gauge, Boxes, Users, AlertTriangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -124,14 +124,14 @@ function DrillContent() {
               <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Time Limit</div><div className="font-bold text-lg">{formatTime(section.timeSeconds)}</div></div>
               <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Questions</div><div className="font-bold text-lg">{questions.length}</div></div>
               <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Sec/Question</div><div className="font-bold text-lg">{(section.timeSeconds / questions.length).toFixed(0)}s</div></div>
-              <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Official Count</div><div className="font-bold text-lg">{section.officialCount}</div></div>
+              <div className="p-3 rounded-xl bg-slate-800"><div className="text-slate-400">Pacing Reference</div><div className="font-bold text-lg">{section.referenceCount}</div></div>
             </div>
             {(section as any).hardToFinish && (
               <div className="p-4 rounded-xl border border-red-800/50 bg-red-950/20 flex items-start gap-3">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
                 <div>
                   <p className="text-red-300 text-sm font-semibold">Most candidates do NOT finish this section</p>
-                  <p className="text-slate-300 text-sm mt-1">At {(section as any).secPerQ}s per question, speed is the primary skill. Guess and move — never leave blanks. There is no guessing penalty on the official AFOQT.</p>
+                  <p className="text-slate-300 text-sm mt-1">This practice preset allows about {(section as any).secPerQ}s per question. Use it to rehearse pacing, then confirm current test-day rules with your recruiter or test administrator.</p>
                 </div>
               </div>
             )}
