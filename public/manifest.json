@@ -1,7 +1,7 @@
 {
-  "name": "AFOQTPro — Adaptive Exam Simulator",
+  "name": "AFOQTPro — Local-First Learning Simulator",
   "short_name": "AFOQTPro",
-  "description": "Science-backed adaptive AFOQT prep with spaced repetition, stress conditioning, and growth analytics.",
+  "description": "Unofficial local-first AFOQT-style practice with timed drills, SM-2 review scheduling, and progress analytics.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -37,9 +37,9 @@
       "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
     },
     {
-      "name": "Full Exam",
-      "short_name": "Exam",
-      "description": "Start a full exam simulation",
+      "name": "Timed Practice",
+      "short_name": "Practice",
+      "description": "Start the configured timed practice sequence",
       "url": "/exam",
       "icons": [{ "src": "/icons/icon-192.svg", "sizes": "192x192" }]
     }

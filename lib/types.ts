@@ -33,7 +33,7 @@ export interface SectionMeta {
   timeSeconds: number;
   description: string;
   tips: string;
-  officialCount: number;
+  referenceCount: number;
 }
 
 // SM-2 spaced repetition card state
@@ -65,48 +65,36 @@ export interface Session {
   attempts: QuestionAttempt[];
 }
 
-export interface CompositeScore {
-  name: string;
-  score: number;
-  min: number; // typical minimum for qualification
-  description: string;
-}
-
 export const COMPOSITE_DEFS = [
   {
     key: "pilot",
-    name: "Pilot",
+    name: "Pilot-oriented practice",
     sections: ["verbal","arithmetic","table","instrument","math","aviation"] as SectionId[],
-    minScore: 25,
-    description: "Required for rated pilot training. Combines verbal, math, table reading, instrument comprehension, and aviation subtests.",
+    description: "A local grouping of verbal, math, table, instrument, and aviation practice results.",
   },
   {
     key: "cso",
-    name: "Combat Systems Officer",
+    name: "CSO-oriented practice",
     sections: ["verbal","arithmetic","math","table","block"] as SectionId[],
-    minScore: 25,
-    description: "Navigator/CSO track. Heavy on math, spatial reasoning (block counting), and table reading speed.",
+    description: "A local grouping of verbal, math, table, and spatial practice results.",
   },
   {
     key: "abm",
-    name: "Air Battle Manager",
+    name: "ABM-oriented practice",
     sections: ["verbal","arithmetic","math","table","science"] as SectionId[],
-    minScore: 25,
-    description: "ABM composite draws on verbal, quantitative, science, and table reading.",
+    description: "A local grouping of verbal, quantitative, science, and table practice results.",
   },
   {
     key: "verbal",
-    name: "Verbal",
+    name: "Verbal practice",
     sections: ["verbal","reading","word","judgment"] as SectionId[],
-    minScore: null,
-    description: "Subcomposite: Verbal Analogies + Reading Comprehension + Word Knowledge + Situational Judgment.",
+    description: "A local summary of the app's verbal, reading, word, and judgment sections.",
   },
   {
     key: "quant",
-    name: "Quantitative",
+    name: "Quantitative practice",
     sections: ["arithmetic","math"] as SectionId[],
-    minScore: null,
-    description: "Subcomposite: Arithmetic Reasoning + Math Knowledge.",
+    description: "A local summary of arithmetic and mathematics practice.",
   },
 ] as const;
 

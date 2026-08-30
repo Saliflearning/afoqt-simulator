@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Session, SectionId, SectionPerf, WeakTopic, QuestionAttempt } from "./types";
+import type { Session, SectionId, SectionPerf, WeakTopic } from "./types";
 import { QUESTIONS } from "./questions";
 
 export function cn(...inputs: ClassValue[]) {
