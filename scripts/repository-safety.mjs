@@ -58,8 +58,18 @@ function scanCurrent() {
   const findings = [];
   const files = git("ls-files", "-z").split("\0").filter(Boolean);
   for (const path of files) {
-    if (!fs.existsSync(path) || fs.statSync(path).size > maxBlobBytes) continue;
-    const data = fs.readFileSync(path);
+    let handle;
+    let data;
+    try {
+      handle = fs.openSync(path, "r");
+      if (fs.fstatSync(handle).size > maxBlobBytes) continue;
+      data = fs.readFileSync(handle);
+    } catch (error) {
+      if (error?.code === "ENOENT") continue;
+      throw error;
+    } finally {
+      if (handle !== undefined) fs.closeSync(handle);
+    }
     if (data.includes(0)) continue;
     findings.push(...scanText(data.toString("utf8"), path, true));
   }
